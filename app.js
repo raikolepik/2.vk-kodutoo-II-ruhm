@@ -1,19 +1,19 @@
 (function(){
    "use strict";
 
-   var Moosipurk = function(){
+   var retsept = function(){
 
      // SEE ON SINGLETON PATTERN
-     if(Moosipurk.instance){
-       return Moosipurk.instance;
+     if(retsept.instance){
+       return retsept.instance;
      }
-     //this viitab Moosipurk fn
-     Moosipurk.instance = this;
+     //this viitab retsept fn
+     retsept.instance = this;
 
-     this.routes = Moosipurk.routes;
+     this.routes = retsept.routes;
      // this.routes['home-view'].render()
 
-     console.log('moosipurgi sees');
+     console.log('retsept');
 
      // KÕIK muuutujad, mida muudetakse ja on rakendusega seotud defineeritakse siin
      this.click_count = 0;
@@ -21,15 +21,15 @@
      console.log(this);
 
      // hakkan hoidma kõiki purke
-     this.jars = [];
+     this.recipe = [];
 
      // Kui tahan Moosipurgile referenci siis kasutan THIS = MOOSIPURGI RAKENDUS ISE
      this.init();
    };
 
-   window.Moosipurk = Moosipurk; // Paneme muuutja külge
+   window.retsept = retsept; // Paneme muuutja külge
 
-   Moosipurk.routes = {
+   retsept.routes = {
      'home-view': {
        'render': function(){
          // käivitame siis kui lehte laeme
@@ -56,7 +56,7 @@
    };
 
    // Kõik funktsioonid lähevad Moosipurgi külge
-   Moosipurk.prototype = {
+   retsept.prototype = {
 
      init: function(){
        console.log('Rakendus läks tööle');
@@ -74,18 +74,18 @@
        }
 
        //saan kätte purgid localStorage kui on
-       if(localStorage.jars){
+       if(localStorage.recipe){
            //võtan stringi ja teen tagasi objektideks
-           this.jars = JSON.parse(localStorage.jars);
-           console.log('laadisin localStorageist massiiivi ' + this.jars.length);
+           this.recipe = JSON.parse(localStorage.recipe);
+           console.log('laadisin localStorageist massiiivi ' + this.recipe.length);
 
            //tekitan loendi htmli
-           this.jars.forEach(function(jar){
+           this.recipe.forEach(function(recipe){
 
-               var new_jar = new Jar(jar.title, jar.ingredients);
+               var new_recipe = new retsept(recipe.title, recipe.ingredients);
 
-               var li = new_jar.createHtmlElement();
-               document.querySelector('.list-of-jars').appendChild(li);
+               var li = new_recipe.createHtmlElement();
+               document.querySelector('.list-of-recipe').appendChild(li);
 
            });
 
@@ -98,7 +98,7 @@
      },
 
      bindEvents: function(){
-       document.querySelector('.add-new-jar').addEventListener('click', this.addNewClick.bind(this));
+       document.querySelector('.add-new-recipe').addEventListener('click', this.addNewClick.bind(this));
 
        //kuulan trükkimist otsikastis
        document.querySelector('#search').addEventListener('keyup', this.search.bind(this));
@@ -110,7 +110,7 @@
          var needle = document.querySelector('#search').value.toLowerCase();
          console.log(needle);
 
-         var list = document.querySelectorAll('ul.list-of-jars li');
+         var list = document.querySelectorAll('ul.list-of-recipe li');
          console.log(list);
 
          for(var i = 0; i < list.length; i++){
@@ -135,25 +135,25 @@
      },
 
      addNewClick: function(event){
-       //salvestame purgi
+
        //console.log(event);
 
        var title = document.querySelector('.title').value;
        var ingredients = document.querySelector('.ingredients').value;
 
        //console.log(title + ' ' + ingredients);
-       //1) tekitan uue Jar'i
-       var new_jar = new Jar(title, ingredients);
+       //1) tekitan uue recipe'i
+       var new_recipe = new recipe(title, ingredients);
 
        //lisan massiiivi purgi
-       this.jars.push(new_jar);
-       console.log(JSON.stringify(this.jars));
+       this.recipe.push(new_recipe);
+       console.log(JSON.stringify(this.recipe));
        // JSON'i stringina salvestan localStorage'isse
-       localStorage.setItem('jars', JSON.stringify(this.jars));
+       localStorage.setItem('recipe', JSON.stringify(this.recipe));
 
        // 2) lisan selle htmli listi juurde
-       var li = new_jar.createHtmlElement();
-       document.querySelector('.list-of-jars').appendChild(li);
+       var li = new_recipe.createHtmlElement();
+       document.querySelector('.list-of-recipe').appendChild(li);
 
 
      },
@@ -193,23 +193,15 @@
 
    }; // MOOSIPURGI LÕPP
 
-   var Jar = function(new_title, new_ingredients){
+   var recipe = function(new_title, new_ingredients){
      this.title = new_title;
      this.ingredients = new_ingredients;
-     console.log('created new jar');
+     console.log('created new recipe');
    };
 
-   Jar.prototype = {
+   recipe.prototype = {
      createHtmlElement: function(){
 
-       // võttes title ja ingredients ->
-       /*
-       li
-        span.letter
-          M <- title esimene täht
-        span.content
-          title | ingredients
-       */
 
        var li = document.createElement('li');
 
@@ -236,7 +228,7 @@
 
    // kui leht laetud käivitan Moosipurgi rakenduse
    window.onload = function(){
-     var app = new Moosipurk();
+     var app = new retsept();
    };
 
 })();

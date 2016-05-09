@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Retsept</title>
-  <script src="app1.js" charset="utf-8"></script>
+  <title>Evoglass</title>
+  <script src="app.js" charset="utf-8"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,24 +20,26 @@
 
     <div id="list-view">
       <h1>Loend</h1>
-      <p class="loading">Laeb...</p><br>
+
       <input type="search" placeholder="Enter keyword" id="search"><br>
-      <ul class="list-of-recipe"></ul>
+      <ul class="list-of-jars"></ul>
     </div>
     <div id="manage-view">
-      <h1>Haldus</h1>
+      <h1>Prillide lisamine</h1>
 
-      <label for="title">Nimi: </label><br>
+      <label for="title">Värv </label><br>
       <input type="text" name="title" class="title"><br>
 
-      <label for="ingredients">Koostis: </label><br>
+      <label for="ingredients">Materjal </label><br>
       <input type="text" name="ingredients" class="ingredients"><br>
 
-      <button class="add-new-recipe pull-right">Lisa uus retsept</button>
+      <button class="add-new-jar pull-right">Lisa uued prillid</button>
     </div>
 
     <div id="home-view">
-      <h1>Avaleht</h1>
+      <h1>Tutvustus</h1>
+      <p>See rakendus on tehtud prillide lisamiseks</p>
+      <p>Põhjaks kasutasin Moosipurgi rakendust</p>
     </div>
 
   </main>

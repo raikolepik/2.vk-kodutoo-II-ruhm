@@ -126,6 +126,8 @@
 
      },
 
+
+
      bindEvents: function(){
        document.querySelector('.add-new-jar').addEventListener('click', this.addNewClick.bind(this));
 
@@ -180,6 +182,15 @@
 
 
 	 },
+
+   function randomize(){
+  var myarray = new Array("item1", "item2", "item3");
+  var randomId =  Math.floor((Math.random()*myarray.length));
+  var randomItem = myarray[randomid];
+
+  alert(randomItem);
+}
+
      search: function(event){
          //otsikasti väärtus
          var needle = document.querySelector('#search').value.toLowerCase();
@@ -326,6 +337,18 @@
 
        li.appendChild(span_with_content);
 
+       var span_edit = document.createElement('span');
+       span_edit.style.color = "green";
+       span_edit.style.cursor = "pointer";
+       //kustutamiseks panen id kaasa
+       span_edit.setAttribute("data-id", this.id);
+
+       span_edit.innerHTML = " Edit";
+
+       li.appendChild(span_edit);
+
+
+
 	   //DELETE nupp
 	   var span_delete = document.createElement('span');
 	   span_delete.style.color = "red";
@@ -340,7 +363,7 @@
 
 	   //keegi vajutas nuppu
 	   span_delete.addEventListener("click", Retsept.instance.deleteJar.bind(Retsept.instance));
-
+     span_edit.addEventListener("click", Retsept.instance.editJar.bind(Retsept.instance));
        return li;
 
      }

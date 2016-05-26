@@ -126,8 +126,6 @@
 
      },
 
-
-
      bindEvents: function(){
        document.querySelector('.add-new-jar').addEventListener('click', this.addNewClick.bind(this));
 
@@ -182,15 +180,47 @@
 
 
 	 },
+   //Commit 2
+   editJar: function(event){
 
-   function randomize(){
-  var myarray = new Array("item1", "item2", "item3");
-  var randomId =  Math.floor((Math.random()*myarray.length));
-  var randomItem = myarray[randomid];
+    var title = prompt("Sisesta uus värv");
+    var ingredients = prompt("Sisesta uus materjal");
 
-  alert(randomItem);
-}
 
+    // KUSTUTAN HTMLI
+    var ul = event.target.parentNode.parentNode;
+    var li = event.target.parentNode;
+
+    ul.removeChild(li);
+
+    //KUSTUTAN OBJEKTI ja uuenda localStoragit
+
+    var delete_id = event.target.dataset.id;
+
+    for(var i = 0; i < this.jars.length; i++){
+
+      if(this.jars[i].id == delete_id){
+        //see on see
+        //kustuta kohal i objekt ära
+        this.jars.splice(i, 1);
+        break;
+      }
+    }
+
+
+    var id = guid();
+    var new_jar = new Jar(id, title, ingredients);
+
+    this.jars.push(new_jar);
+
+    localStorage.setItem('jars', JSON.stringify(this.jars));
+
+    var uusli = new_jar.createHtmlElement();
+    document.querySelector('.list-of-jars').appendChild(uusli);
+
+
+
+  }, // Commit 2 lõpp
      search: function(event){
          //otsikasti väärtus
          var needle = document.querySelector('#search').value.toLowerCase();
@@ -337,6 +367,8 @@
 
        li.appendChild(span_with_content);
 
+
+       // COMMIT 1
        var span_edit = document.createElement('span');
        span_edit.style.color = "green";
        span_edit.style.cursor = "pointer";
@@ -346,6 +378,8 @@
        span_edit.innerHTML = " Edit";
 
        li.appendChild(span_edit);
+
+       // 1 END
 
 
 
@@ -362,8 +396,9 @@
 	   li.appendChild(span_delete);
 
 	   //keegi vajutas nuppu
-	   span_delete.addEventListener("click", Retsept.instance.deleteJar.bind(Retsept.instance));
-     span_edit.addEventListener("click", Retsept.instance.editJar.bind(Retsept.instance));
+     span_delete.addEventListener("click", Retsept.instance.deleteJar.bind(Retsept.instance));
+	   span_edit.addEventListener("click", Retsept.instance.editJar.bind(Retsept.instance));
+
        return li;
 
      }
